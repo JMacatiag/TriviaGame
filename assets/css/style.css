@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'gotFont'; /*a name to be used later*/
+    src: url('../images/gotFont.ttf'); /*URL to font*/
+}
+
+body {
+	background-image: url("../images/gotHouseBanners.jpg");
+}
+
+.playField {
+	background-color: black;
+	color:white;
+	opacity: .70;
+	height: 850px;
+
+}
+.playFieldTitle {
+	font-family: "gotFont";
+	font-size: 45px;
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.btn {
+	text-align: center;
+	margin: auto;
+}
+
+.playArea {
+	font-size: 20px;
+	text-align: center;
+	margin-top: 30px;
+
+}
