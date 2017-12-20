@@ -23,8 +23,8 @@ body {
 }
 
 .btn {
-	text-align: center;
-	margin: auto;
+	color: black;
+	font-weight: bold;
 }
 
 .playArea {
