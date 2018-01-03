@@ -1,8 +1,10 @@
 var correctAnswers=0;
 var incorrectAnswers=0;
 var unanswered=0;
-var questionArray = [1,2,3,4,5,6,7,8,9];
+var questionDisplay=0;
+var audio;
 var questionTimer=30;
+var counter=setInterval(timer, 1000);
 
 var questionOne={
 	question: "Which family was warden of the North during the reign of King Robert Baratheon?",
@@ -44,7 +46,7 @@ var questionFive={
 	question: "The house words for House Hornwood are:",
 	responseOne: "We Do No Sow",
 	responseTwo: "Unfliching",
-	resonseThree: "When All us Darkest",
+	responseThree: "When All us Darkest",
 	responseFour: "Righteous in Wrath",
 	answer: "Righteous in Wrath",
 };
@@ -53,7 +55,7 @@ var questionSix={
 	question: "Who teaches Arya the ways of the Faceless men?",
 	responseOne: "Waif",
 	responseTwo: "Jaqen H'ghar",
-	resonseThree: " No one",
+	responseThree: " No one",
 	responseFour: "Many Faced God",
 	answer: "No one",
 };
@@ -62,7 +64,7 @@ var questionSeven={
 	question: "When did Rhaegar Targaryen die?",
 	responseOne: "Battle of the Trident",
 	responseTwo: "Sack of King's Landing",
-	resonseThree: "Siege of Storm's End",
+	responseThree: "Siege of Storm's End",
 	responseFour: "Tower of Joy",
 	answer: "Battle of the Trident",
 };
@@ -71,7 +73,7 @@ var questionEight={
 	question: "Who of the followig was not invoved in the Conquest?",
 	responseOne: "Visenya Targaryen",
 	responseTwo: "Rhaenys Targaryen",
-	resonseThree: "Aegon Targaryen",
+	responseThree: "Aegon Targaryen",
 	responseFour: "Rhaenyra Targaryen",
 	answer: "Rhaenyra Targaryen",
 };
@@ -85,6 +87,9 @@ var questionNine={
 	answer: "Stannis Baratheon",
 };
 
+var questionArray=[questionOne, questionTwo, questionThree, questionFour, questionFive, questionSix, questionSeven, questionEight, questionNine];
+
+
 
 // on hover change background of possible answer
 $(".answer").hover(function(){
@@ -94,7 +99,80 @@ $(this).css("background-color", "black");
 });
 
 // correct answer function
-function correct(){
+function correctResponse(){
 	correctAnswers++;
 }
 
+// incorrect answer function
+function incorrectResponse(){
+	incorrectAnswers++;
+}
+
+// no answer given
+function noResponse(){
+	unanswered++;
+}
+
+// timer function
+function timer(){
+	questionTimer--;
+	
+}
+
+// function to run the game
+function nextQuestion() {
+	$(".triviaQuestion").html(questionArray[questionDisplay].question);
+
+	$("#answerOne").html(questionArray[questionDisplay].responseOne);
+
+	$("#answerTwo").html(questionArray[questionDisplay].responseTwo);
+
+	$("#answerThree").html(questionArray[questionDisplay].responseThree);
+
+	$("#answerFour").html(questionArray[questionDisplay].responseFour);
+
+	$("#countdown").html(questionTimer);
+}
+
+var x = document.getElementById("myAudio"); 
+function playAudio() { 
+    x.play(); 
+} 
+function pauseAudio() { 
+    x.pause(); 
+} 
+
+audio = $("audio");
+audio.loop = true;
+
+$("#startButton").on("click", function(){
+	nextQuestion();
+	 // playAudio();
+	 // x.loop = true;
+	$(this).hide();
+})
+
+$(".answer").on("click", function(){
+		var userChoice=$(this).html();
+		console.log(userChoice);
+
+
+
+		if (userChoice===questionArray[questionDisplay].answer){
+			correctAnswers++;
+			questionDisplay++;
+			nextQuestion();
+			console.log(correctAnswers);
+			console.log(incorrectAnswers);
+		}
+		if (userChoice!==questionArray[questionDisplay].answer){
+			incorrectAnswers++;
+			questionDisplay++;
+			nextQuestion();
+			console.log(correctAnswers);
+			console.log(incorrectAnswers);
+		}
+		if (correctAnswers+incorrectAnswers===9){
+
+		}
+})
