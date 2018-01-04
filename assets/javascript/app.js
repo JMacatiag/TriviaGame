@@ -4,7 +4,7 @@ var unanswered=0;
 var questionDisplay=0;
 var audio;
 var questionTimer=30;
-var counter=setInterval(timer, 1000);
+// var counter=setInterval(1000);
 
 var questionOne={
 	question: "Which family was warden of the North during the reign of King Robert Baratheon?",
@@ -113,10 +113,27 @@ function noResponse(){
 	unanswered++;
 }
 
-// timer function
-function timer(){
-	questionTimer--;
+// // timer function
+// function timer(){
+// 	questionTimer--;
 	
+// }
+
+function startTimer() {
+
+    var countdownTimer = setInterval(function() {
+
+        console.log(questionTimer);
+        questionTimer = questionTimer - 1;
+
+        if (questionTimer <= 0) {
+            clearInterval(questionTimer);
+        }
+
+    }, 1000);
+    console.log(questionTimer);
+    $("#countdown").html(questionTimer);
+
 }
 
 // function to run the game
@@ -147,9 +164,10 @@ audio.loop = true;
 
 $("#startButton").on("click", function(){
 	nextQuestion();
-	 // playAudio();
-	 // x.loop = true;
+	 playAudio();
+	 x.loop = true;
 	$(this).hide();
+	startTimer();
 })
 
 $(".answer").on("click", function(){
@@ -157,13 +175,19 @@ $(".answer").on("click", function(){
 		console.log(userChoice);
 
 
-
+		if (questionTimer===0){
+			unanswered++;
+			questionDisplay++;
+			nextQuestion();
+			questionTimer=30;
+		}
 		if (userChoice===questionArray[questionDisplay].answer){
 			correctAnswers++;
 			questionDisplay++;
 			nextQuestion();
 			console.log(correctAnswers);
 			console.log(incorrectAnswers);
+			questionTimer=30;
 		}
 		if (userChoice!==questionArray[questionDisplay].answer){
 			incorrectAnswers++;
@@ -171,6 +195,7 @@ $(".answer").on("click", function(){
 			nextQuestion();
 			console.log(correctAnswers);
 			console.log(incorrectAnswers);
+			questionTimer=30;
 		}
 		if (correctAnswers+incorrectAnswers===9){
 
