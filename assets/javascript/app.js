@@ -129,6 +129,7 @@ function startTimer() {
         if (questionTimer <= 0) {
             clearInterval(questionTimer);
         }
+         $("#countdown").html(questionTimer);
 
     }, 1000);
     console.log(questionTimer);
