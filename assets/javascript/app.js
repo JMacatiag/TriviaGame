@@ -9,6 +9,7 @@ var completedQuestions=0;
 var responseImage=0;
 var showImage;
 
+// Questions
 var questionOne={
 	question: "Which family was warden of the North during the reign of King Robert Baratheon?",
 	responseOne: "House Stark",
@@ -168,22 +169,20 @@ function noResponse(){
 	setTimeout(nextQuestion,3000);
 }
 
+// change source of reaction image
 function displayImage() {
   $("#image-holder").html("<img src=" + images[responseImage] + " width='400px'>");
 }
 
 // countdown function
 function startTimer() {
-
     var countdownTimer = setInterval(function() {
         questionTimer = questionTimer - 1;
         if (questionTimer < 0) {
             // clearInterval(questionTimer);
             noResponse();
         }
-       
          $("#timeKeeper").html("Time Remaining: "+questionTimer+" seconds");
-
     }, 1000);
   
 
@@ -199,37 +198,33 @@ function nextQuestion() {
 		$("#answerTwo").show();
 		$("#answerThree").show();
 		$("#answerFour").show();
+
 		$(".triviaQuestion").html(questionArray[questionDisplay].question);
-
 		$("#answerOne").html(questionArray[questionDisplay].responseOne);
-
 		$("#answerTwo").html(questionArray[questionDisplay].responseTwo);
-
 		$("#answerThree").html(questionArray[questionDisplay].responseThree);
-
 		$("#answerFour").html(questionArray[questionDisplay].responseFour);
-
 		$("#countdown").html(questionTimer);
 		console.log(completedQuestions);
 	}
 
 	if (completedQuestions===9){
-		$(function () {
-     		$('#restart').removeClass('hidden');
-		 });	
-
-		$("#answerThree").show();
-		$(".triviaQuestion").html("You have complete the Game of Thrones");
-		$("#answerOne").html("Correct Answers: "+correctAnswers);
-		$("#answerTwo").html("Incorrect Answers: "+incorrectAnswers);
-		$("#answerThree").html("Unanswered Questions: "+unanswered);
-		setTimeout(reset,500);
+		endGame();
 	}
 
 }
 
 function endGame(){
+	$(function () {
+     	$('#restart').removeClass('hidden');
+	});	
 
+	$("#answerThree").show();
+	$(".triviaQuestion").html("You have complete the Game of Thrones");
+	$("#answerOne").html("Correct Answers: "+correctAnswers);
+	$("#answerTwo").html("Incorrect Answers: "+incorrectAnswers);
+	$("#answerThree").html("Unanswered Questions: "+unanswered);
+	setTimeout(reset,500);
 }
 
 // to play audio upon starting the game
