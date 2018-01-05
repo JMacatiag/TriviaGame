@@ -244,7 +244,7 @@ audio.loop = true;
 // Running the games
 $("#startButton").on("click", function(){
 	nextQuestion();
-	 // playAudio();
+	 playAudio();
 	 x.loop = true;
 	$(this).hide();
 	startTimer();
