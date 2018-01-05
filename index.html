@@ -25,30 +25,23 @@
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8 playField">
-			<div class="playFieldTitle">
+			<div class="playFieldTitle gameTitle">
 				The Game of Thrones Trivia Game!
 			</div>
 
 			<button type="button" id ="startButton" class="btn btn-secondary btn-lg btn-block">Click to start the Game of Thrones</button>
+			<button type="button" id ="restart" class="btn btn-secondary btn-lg btn-block hidden">Restart Game?</button>
 
-			<div class="playArea">
-				Time Remaining: <span id="countdown">0</span> seconds
+			<div class="playArea timeTitle">
+				<div id="timeKeeper"></div>
 			</div>
-			<div class="playArea triviaQuestion">Triva Question Here</div>
+			<div class="playArea triviaQuestion"></div>
 
-		<!-- 	<button type="button" id ="answerOne" class="btn btn-secondary btn-lg btn-block answer">Answer</button>
-
-			<button type="button" id ="answerTwo" class="btn btn-secondary btn-lg btn-block answer">Answer</button>
-
-			<button type="button" id ="answerThree" class="btn btn-secondary btn-lg btn-block answer">Answer</button>
-
-			<button type="button" id ="answerFour" class="btn btn-secondary btn-lg btn-block answer">Answer</button> -->
-
-			<div class="playArea answer" id="answerOne">answer</div>
-			<div class="playArea answer" id="answerTwo">answer</div>
-			<div class="playArea answer" id="answerThree">answer</div>
-			<div class="playArea answer" id="answerFour">answer</div>
-			
+			<div class="playArea answer" id="answerOne"></div>
+			<div class="playArea answer" id="answerTwo"></div>
+			<div class="playArea answer" id="answerThree"></div>
+			<div class="playArea answer" id="answerFour"></div>
+			<div id="image-holder"></div>			
 		</div>
 		<div class="col-md-2"></div>
 	</div>

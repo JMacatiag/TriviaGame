@@ -1,10 +1,13 @@
 var correctAnswers=0;
 var incorrectAnswers=0;
 var unanswered=0;
+var userChoice="";
 var questionDisplay=0;
 var audio;
 var questionTimer=30;
-// var counter=setInterval(1000);
+var completedQuestions=0;
+var responseImage=0;
+var showImage;
 
 var questionOne={
 	question: "Which family was warden of the North during the reign of King Robert Baratheon?",
@@ -55,9 +58,9 @@ var questionSix={
 	question: "Who teaches Arya the ways of the Faceless men?",
 	responseOne: "Waif",
 	responseTwo: "Jaqen H'ghar",
-	responseThree: " No one",
+	responseThree: "No One",
 	responseFour: "Many Faced God",
-	answer: "No one",
+	answer: "No One",
 };
 
 var questionSeven={
@@ -89,7 +92,7 @@ var questionNine={
 
 var questionArray=[questionOne, questionTwo, questionThree, questionFour, questionFive, questionSix, questionSeven, questionEight, questionNine];
 
-
+var images=["assets/images/correct.gif","assets/images/incorrect.gif","assets/images/unanswered.gif"]
 
 // on hover change background of possible answer
 $(".answer").hover(function(){
@@ -98,60 +101,138 @@ $(this).css("background-color", "grey");
 $(this).css("background-color", "black");
 });
 
+// reset function
+function reset(){
+	correctAnswers=0;
+	incorrectAnswers=0;
+	unanswered=0;
+	userChoice="";
+	questionDisplay=0;
+	questionTimer=30;
+	completedQuestions=0;
+}
+
+
 // correct answer function
 function correctResponse(){
+	$("#image-holder").show();
+	$(".timeTitle").hide();
+	$(".triviaQuestion").hide();
+	$("#answerOne").html("Correct!");
+	$("#answerTwo").html("Your answer of: "+questionArray[questionDisplay].answer+" was right");
+	$("#answerThree").hide();
+	$("#answerFour").hide();
+	responseImage=0;
+	displayImage();
 	correctAnswers++;
+	questionDisplay++;
+	completedQuestions++;
+	questionTimer=33;
+	setTimeout(nextQuestion,3000);
 }
 
 // incorrect answer function
 function incorrectResponse(){
+	$("#image-holder").show();
+	$(".timeTitle").hide();
+	$(".triviaQuestion").hide();
+	$("#answerOne").html("Wrong!");
+	$("#answerTwo").html("The correct answer is "+questionArray[questionDisplay].answer);
+	$("#answerThree").hide();
+	$("#answerFour").hide();
+	responseImage=1;
+	displayImage();
 	incorrectAnswers++;
+	questionDisplay++;
+	completedQuestions++;
+	questionTimer=33;
+	setTimeout(nextQuestion,3000);
+
 }
 
 // no answer given
 function noResponse(){
+	$("#image-holder").show();
+	$(".timeTitle").hide();
+	$(".triviaQuestion").hide();
+	$("#answerOne").html("What?! You're too slow");
+	$("#answerTwo").html("You didn't answer");
+	$("#answerThree").hide();
+	$("#answerFour").hide();
+	responseImage=2;
+	displayImage();
 	unanswered++;
+	questionDisplay++;
+	completedQuestions++;
+	questionTimer=33;
+	setTimeout(nextQuestion,3000);
 }
 
-// // timer function
-// function timer(){
-// 	questionTimer--;
-	
-// }
+function displayImage() {
+  $("#image-holder").html("<img src=" + images[responseImage] + " width='400px'>");
+}
 
+// countdown function
 function startTimer() {
 
     var countdownTimer = setInterval(function() {
-
-        console.log(questionTimer);
         questionTimer = questionTimer - 1;
-
-        if (questionTimer <= 0) {
-            clearInterval(questionTimer);
+        if (questionTimer < 0) {
+            // clearInterval(questionTimer);
+            noResponse();
         }
-         $("#countdown").html(questionTimer);
+       
+         $("#timeKeeper").html("Time Remaining: "+questionTimer+" seconds");
 
     }, 1000);
-    console.log(questionTimer);
-    $("#countdown").html(questionTimer);
+  
 
 }
 
 // function to run the game
 function nextQuestion() {
-	$(".triviaQuestion").html(questionArray[questionDisplay].question);
+	$("#image-holder").hide();
+	if (completedQuestions<9){
+		$(".timeTitle").show();
+		$(".triviaQuestion").show();
+		$("#answerOne").show();
+		$("#answerTwo").show();
+		$("#answerThree").show();
+		$("#answerFour").show();
+		$(".triviaQuestion").html(questionArray[questionDisplay].question);
 
-	$("#answerOne").html(questionArray[questionDisplay].responseOne);
+		$("#answerOne").html(questionArray[questionDisplay].responseOne);
 
-	$("#answerTwo").html(questionArray[questionDisplay].responseTwo);
+		$("#answerTwo").html(questionArray[questionDisplay].responseTwo);
 
-	$("#answerThree").html(questionArray[questionDisplay].responseThree);
+		$("#answerThree").html(questionArray[questionDisplay].responseThree);
 
-	$("#answerFour").html(questionArray[questionDisplay].responseFour);
+		$("#answerFour").html(questionArray[questionDisplay].responseFour);
 
-	$("#countdown").html(questionTimer);
+		$("#countdown").html(questionTimer);
+		console.log(completedQuestions);
+	}
+
+	if (completedQuestions===9){
+		$(function () {
+     		$('#restart').removeClass('hidden');
+		 });	
+
+		$("#answerThree").show();
+		$(".triviaQuestion").html("You have complete the Game of Thrones");
+		$("#answerOne").html("Correct Answers: "+correctAnswers);
+		$("#answerTwo").html("Incorrect Answers: "+incorrectAnswers);
+		$("#answerThree").html("Unanswered Questions: "+unanswered);
+		setTimeout(reset,500);
+	}
+
 }
 
+function endGame(){
+
+}
+
+// to play audio upon starting the game
 var x = document.getElementById("myAudio"); 
 function playAudio() { 
     x.play(); 
@@ -160,45 +241,46 @@ function pauseAudio() {
     x.pause(); 
 } 
 
+
+// Loops the audio
 audio = $("audio");
 audio.loop = true;
 
+// Running the games
 $("#startButton").on("click", function(){
 	nextQuestion();
-	 playAudio();
+	 // playAudio();
 	 x.loop = true;
 	$(this).hide();
 	startTimer();
 })
 
+// Running the restart button
+$("#restart").on("click", function(){
+	questionTimer=30;
+	$("#restart").hide();
+	nextQuestion();
+})
+
+// Gameplay
 $(".answer").on("click", function(){
-		var userChoice=$(this).html();
+		userChoice=$(this).html();
 		console.log(userChoice);
 
 
-		if (questionTimer===0){
-			unanswered++;
-			questionDisplay++;
-			nextQuestion();
-			questionTimer=30;
-		}
+	
 		if (userChoice===questionArray[questionDisplay].answer){
-			correctAnswers++;
-			questionDisplay++;
-			nextQuestion();
-			console.log(correctAnswers);
-			console.log(incorrectAnswers);
-			questionTimer=30;
+			correctResponse();
+			return;
 		}
 		if (userChoice!==questionArray[questionDisplay].answer){
-			incorrectAnswers++;
-			questionDisplay++;
-			nextQuestion();
-			console.log(correctAnswers);
-			console.log(incorrectAnswers);
-			questionTimer=30;
+			incorrectResponse();
+			return;
 		}
-		if (correctAnswers+incorrectAnswers===9){
 
-		}
+		
 })
+
+
+
+
