@@ -119,8 +119,12 @@ function correctResponse(){
 	$("#image-holder").show();
 	$(".timeTitle").hide();
 	$(".triviaQuestion").hide();
-	$("#answerOne").html("Correct!");
-	$("#answerTwo").html("Your answer of: "+questionArray[questionDisplay].answer+" was right");
+	$("#textAreaOne").show();
+	$("#textAreaTwo").show();
+	$("#textAreaOne").html("Correct!");
+	$("#textAreaTwo").html("Your answer of: "+questionArray[questionDisplay].answer+" was right");
+	$("#answerOne").hide();
+	$("#answerTwo").hide();
 	$("#answerThree").hide();
 	$("#answerFour").hide();
 	responseImage=0;
@@ -137,8 +141,12 @@ function incorrectResponse(){
 	$("#image-holder").show();
 	$(".timeTitle").hide();
 	$(".triviaQuestion").hide();
-	$("#answerOne").html("Wrong!");
-	$("#answerTwo").html("The correct answer is "+questionArray[questionDisplay].answer);
+	$("#textAreaOne").show();
+	$("#textAreaTwo").show();
+	$("#textAreaOne").html("Wrong!");
+	$("#textAreaTwo").html("The correct answer is "+questionArray[questionDisplay].answer);
+	$("#answerOne").hide();
+	$("#answerTwo").hide();
 	$("#answerThree").hide();
 	$("#answerFour").hide();
 	responseImage=1;
@@ -156,8 +164,12 @@ function noResponse(){
 	$("#image-holder").show();
 	$(".timeTitle").hide();
 	$(".triviaQuestion").hide();
-	$("#answerOne").html("What?! You're too slow");
-	$("#answerTwo").html("You didn't answer");
+	$("#textAreaOne").show();
+	$("#textAreaTwo").show();
+	$("#textAreaOne").html("What?! You're too slow");
+	$("#textAreaTwo").html("You didn't answer");
+	$("#answerOne").hide();
+	$("#answerTwo").hide();
 	$("#answerThree").hide();
 	$("#answerFour").hide();
 	responseImage=2;
@@ -171,7 +183,7 @@ function noResponse(){
 
 // change source of reaction image
 function displayImage() {
-  $("#image-holder").html("<img src=" + images[responseImage] + " width='400px'>");
+  $("#image-holder").html("<img src=" + images[responseImage] + " width='600px'>");
 }
 
 // countdown function
@@ -199,6 +211,10 @@ function nextQuestion() {
 		$("#answerThree").show();
 		$("#answerFour").show();
 
+		$("#textAreaOne").hide();
+		$("#textAreaTwo").hide();
+		$("#textAreaThree").hide();
+
 		$(".triviaQuestion").html(questionArray[questionDisplay].question);
 		$("#answerOne").html(questionArray[questionDisplay].responseOne);
 		$("#answerTwo").html(questionArray[questionDisplay].responseTwo);
@@ -218,12 +234,13 @@ function endGame(){
 	$(function () {
      	$('#restart').removeClass('hidden');
 	});	
-
-	$("#answerThree").show();
+	$("#image-holder").hide();
+	$("#answerThree").hide();
+	$("#textAreaThree").show();
 	$(".triviaQuestion").html("You have complete the Game of Thrones");
-	$("#answerOne").html("Correct Answers: "+correctAnswers);
-	$("#answerTwo").html("Incorrect Answers: "+incorrectAnswers);
-	$("#answerThree").html("Unanswered Questions: "+unanswered);
+	$("#textAreaOne").html("Correct Answers: "+correctAnswers);
+	$("#textAreaTwo").html("Incorrect Answers: "+incorrectAnswers);
+	$("#textAreaThree").html("Unanswered Questions: "+unanswered);
 	setTimeout(reset,500);
 }
 
@@ -243,17 +260,18 @@ audio.loop = true;
 
 // Running the games
 $("#startButton").on("click", function(){
+	startTimer();
 	nextQuestion();
 	 playAudio();
 	 x.loop = true;
 	$(this).hide();
-	startTimer();
+	
 })
 
 // Running the restart button
 $("#restart").on("click", function(){
 	questionTimer=30;
-	$("#restart").hide();
+	 $("#restart").addClass("hidden");
 	nextQuestion();
 })
 
