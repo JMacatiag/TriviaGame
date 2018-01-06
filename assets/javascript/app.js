@@ -113,7 +113,6 @@ function reset(){
 	completedQuestions=0;
 }
 
-
 // correct answer function
 function correctResponse(){
 	$("#image-holder").show();
@@ -191,13 +190,10 @@ function startTimer() {
     var countdownTimer = setInterval(function() {
         questionTimer = questionTimer - 1;
         if (questionTimer < 0) {
-            // clearInterval(questionTimer);
             noResponse();
         }
          $("#timeKeeper").html("Time Remaining: "+questionTimer+" seconds");
     }, 1000);
-  
-
 }
 
 // function to run the game
@@ -279,9 +275,6 @@ $("#restart").on("click", function(){
 $(".answer").on("click", function(){
 		userChoice=$(this).html();
 		console.log(userChoice);
-
-
-	
 		if (userChoice===questionArray[questionDisplay].answer){
 			correctResponse();
 			return;
@@ -290,8 +283,6 @@ $(".answer").on("click", function(){
 			incorrectResponse();
 			return;
 		}
-
-		
 })
 
 
