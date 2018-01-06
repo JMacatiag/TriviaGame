@@ -4,7 +4,7 @@ var unanswered=0;
 var userChoice="";
 var questionDisplay=0;
 var audio;
-var questionTimer=30;
+var questionTimer=15;
 var completedQuestions=0;
 var responseImage=0;
 var showImage;
@@ -109,7 +109,7 @@ function reset(){
 	unanswered=0;
 	userChoice="";
 	questionDisplay=0;
-	questionTimer=30;
+	questionTimer=15;
 	completedQuestions=0;
 }
 
@@ -132,7 +132,7 @@ function correctResponse(){
 	correctAnswers++;
 	questionDisplay++;
 	completedQuestions++;
-	questionTimer=33;
+	questionTimer=18;
 	setTimeout(nextQuestion,3000);
 }
 
@@ -154,7 +154,7 @@ function incorrectResponse(){
 	incorrectAnswers++;
 	questionDisplay++;
 	completedQuestions++;
-	questionTimer=33;
+	questionTimer=18;
 	setTimeout(nextQuestion,3000);
 
 }
@@ -177,13 +177,13 @@ function noResponse(){
 	unanswered++;
 	questionDisplay++;
 	completedQuestions++;
-	questionTimer=33;
+	questionTimer=18;
 	setTimeout(nextQuestion,3000);
 }
 
 // change source of reaction image
 function displayImage() {
-  $("#image-holder").html("<img src=" + images[responseImage] + " width='600px'>");
+  $("#image-holder").html("<img src=" + images[responseImage] + ">");
 }
 
 // countdown function
@@ -270,7 +270,7 @@ $("#startButton").on("click", function(){
 
 // Running the restart button
 $("#restart").on("click", function(){
-	questionTimer=30;
+	questionTimer=15;
 	 $("#restart").addClass("hidden");
 	nextQuestion();
 })
