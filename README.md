@@ -8,3 +8,4 @@
 	* Javascript
 	* jQuery
 	* HTML/CSS
+	* Bootstrap
