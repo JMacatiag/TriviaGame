@@ -99,7 +99,7 @@ var images=["assets/images/correct.gif","assets/images/incorrect.gif","assets/im
 $(".answer").hover(function(){
 $(this).css("background-color", "grey");
 }, function(){
-$(this).css("background-color", "white");
+$(this).css("background-color", "black");
 });
 
 // reset function
